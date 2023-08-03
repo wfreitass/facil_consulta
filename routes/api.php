@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('cidades')->controller(CidadeController::class)->group(function () {
-    Route::get('/', 'index')->name('listCidades');
+    Route::get('/', 'index')->name('listCidades')->middleware('jwt.auth');
 });
 
 Route::prefix('medicos')->controller(MedicoController::class)->group(function () {

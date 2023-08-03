@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePacienteRequest;
 use App\Http\Requests\UpdatePacienteRequest;
 use App\Models\Paciente;
+use App\Services\PacienteService;
 
 class PacienteController extends Controller
 {
+    protected $pacienteService;
+
+    public function __construct(PacienteService $pacienteService)
+    {
+        $this->pacienteService = $pacienteService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,7 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json($this->pacienteService->all(), 200);
     }
 
     /**
