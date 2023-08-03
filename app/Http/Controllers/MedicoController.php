@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMedicoRequest;
 use App\Http\Requests\UpdateMedicoRequest;
 use App\Models\Medico;
+use App\Services\MedicoService;
 
 class MedicoController extends Controller
 {
+    protected $medicoService;
+
+    public function __construct(MedicoService $medicoService)
+    {
+        $this->medicoService = $medicoService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,7 @@ class MedicoController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json($this->medicoService->all(), 200);
     }
 
     /**
