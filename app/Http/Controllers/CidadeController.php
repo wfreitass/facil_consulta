@@ -5,9 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCidadeRequest;
 use App\Http\Requests\UpdateCidadeRequest;
 use App\Models\Cidade;
+use App\Services\CidadeService;
 
 class CidadeController extends Controller
 {
+
+    protected $cidadeService;
+
+    public function __construct(CidadeService $cidadeService)
+    {
+        $this->cidadeService = $cidadeService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +24,7 @@ class CidadeController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json($this->cidadeService->all(), 200);
     }
 
     /**
