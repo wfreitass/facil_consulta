@@ -14,4 +14,19 @@ class MedicoRepository extends BaseRepository implements MedicoRepositoryInterfa
         $this->medicoRepository = $medicoRepository;
         parent::__construct($medicoRepository);
     }
+
+    public function all()
+    {
+        return $this->medicoRepository->with('cidade')->orderBy('id', 'asc')->get();
+    }
+
+    public function find($id)
+    {
+        return $this->medicoRepository->with('cidade')->findOrFail($id);
+    }
+
+    public function findPacientes($id)
+    {
+        return $this->medicoRepository->with('pacientes')->findOrFail($id);
+    }
 }

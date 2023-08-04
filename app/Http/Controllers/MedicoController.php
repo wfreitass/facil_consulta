@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMedicoRequest;
 use App\Http\Requests\UpdateMedicoRequest;
 use App\Models\Medico;
+use App\Models\Paciente;
 use App\Services\MedicoService;
+use Illuminate\Http\Request;
 
 class MedicoController extends Controller
 {
@@ -26,6 +28,32 @@ class MedicoController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function attachPacientes(Request $request, Medico $id_medico)
+    {
+        $dados = $request->only(['medico_id', 'paciente_id']);
+        $paciente = Paciente::find($dados['paciente_id']);
+        $medico = $id_medico;
+        $medico->pacientes()->attach($paciente->id);
+        $medico = $this->medicoService->findPacientes($id_medico->id);
+        return response()->json($medico, 200);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function findPacientes(Medico $id_medico)
+    {
+        $medico = $this->medicoService->findPacientes($id_medico->id);
+        return response()->json($medico->pacientes, 200);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -41,9 +69,10 @@ class MedicoController extends Controller
      * @param  \App\Http\Requests\StoreMedicoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreMedicoRequest $request)
+    public function store(Request $request)
     {
-        //
+        $medico = $this->medicoService->create($request->all());
+        return response()->json($medico, 201);
     }
 
     /**

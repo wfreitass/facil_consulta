@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Medico;
 use Illuminate\Database\Seeder;
 
 class MedicoSeeder extends Seeder
@@ -13,6 +14,6 @@ class MedicoSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Medico::factory()->times(5)->create();
     }
 }

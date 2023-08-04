@@ -14,4 +14,9 @@ class CidadeRepository extends BaseRepository implements CidadeRepositoryInterfa
         $this->cidadeRepository = $cidadeRepository;
         parent::__construct($cidadeRepository);
     }
+
+    public function find($id)
+    {
+        return $this->cidadeRepository->with('medicos')->findOrFail($id);
+    }
 }

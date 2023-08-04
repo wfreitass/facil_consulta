@@ -6,6 +6,8 @@ use App\Http\Requests\StorePacienteRequest;
 use App\Http\Requests\UpdatePacienteRequest;
 use App\Models\Paciente;
 use App\Services\PacienteService;
+use Illuminate\Http\Client\Request as ClientRequest;
+use Illuminate\Http\Request;
 
 class PacienteController extends Controller
 {
@@ -41,9 +43,10 @@ class PacienteController extends Controller
      * @param  \App\Http\Requests\StorePacienteRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePacienteRequest $request)
+    public function store(Request $request)
     {
-        //
+        $paciente = $this->pacienteService->create($request->all());
+        return response()->json($paciente, 201);
     }
 
     /**
@@ -75,9 +78,11 @@ class PacienteController extends Controller
      * @param  \App\Models\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePacienteRequest $request, Paciente $paciente)
+    public function update(Request $request, Paciente $id_paciente)
     {
-        //
+        $paciente = $id_paciente;
+        $pacienteAtualizado = $this->pacienteService->update($paciente, $request->only(['nome', 'celular']));
+        return response()->json($paciente, 200);
     }
 
     /**

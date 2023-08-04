@@ -13,4 +13,9 @@ class MedicoService extends BaseService
         parent::__construct($medicoRepository);
         $this->medicoRepository = $medicoRepository;
     }
+
+    public function findPacientes($id)
+    {
+        return $this->medicoRepository->findPacientes($id);
+    }
 }

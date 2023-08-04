@@ -28,6 +28,16 @@ class CidadeController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listMedicos(Cidade $id_cidade)
+    {
+        return response()->json($this->cidadeService->find($id_cidade->id)->medicos, 200);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
